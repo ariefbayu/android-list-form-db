@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Daftar Buku</string>
+    <string name="app_name">AndroidListEditDelete</string>
+    <string name="txtFormJudulBuku">Judul Buku</string>
+    <string name="txtFormPenulis">Penulis</string>
+    <string name="txtFormISBNBuku">ISBN</string>
+    <string name="btnFormBatal">Batal</string>
+    <string name="btnFormSimpan">Simpan</string>
+    <string name="btnListTambah">Tambah</string>
+
+</resources>

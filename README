@@ -1,0 +1,6 @@
+This project, contain various code that will help you learn how to:
+ * access database (create, select, update, delete)
+ * create custom adapter
+ * create custom ListView
+ * refresh ListView when database is altered
+ * create custom Dialog window
