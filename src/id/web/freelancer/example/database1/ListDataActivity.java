@@ -40,51 +40,50 @@ public class ListDataActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		// setContentView(R.layout.form);
 
 		lsvBookView = (ListView) findViewById(R.id.lsvListBook);
 
 		bookDB = new BookDB(getApplicationContext());
 		adapter = new BookAdapter(this);
 
-		//listBook = bookDB.toArray();
-		//lsvBookView.setAdapter(adapter);
 		refreshListAdapter();
-		registerForContextMenu(lsvBookView);
 		
-		buttonCreate = (Button)findViewById(R.id.buttonCreate);
-		buttonCreate.setOnClickListener( new OnClickListener() {
-			
+		//registerForContextMenu() will register supplied view for onCreateContextMenu() 
+		registerForContextMenu(lsvBookView);
+
+		buttonCreate = (Button) findViewById(R.id.buttonCreate);
+		buttonCreate.setOnClickListener(new OnClickListener() {
+
 			@Override
 			public void onClick(View arg0) {
-				showFormDialog(  );
+				showFormDialog();
 			}
 		});
-		
-		
-		
+
 		prepareDiaog();
 	}
-	
+
 	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo cmInfo){
-		if(v.getId() == R.id.lsvListBook) {
-			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)cmInfo;
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo cmInfo) {
+		if (v.getId() == R.id.lsvListBook) {
+			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) cmInfo;
 			menu.setHeaderTitle(listBook.get(info.position).getJudul());
-			String[] menuItems = {"Update", "Delete"};
-			for(int menuIndex = 0; menuIndex < menuItems.length; menuIndex++){
+			String[] menuItems = { "Update", "Delete" };
+			for (int menuIndex = 0; menuIndex < menuItems.length; menuIndex++) {
 				menu.add(Menu.NONE, menuIndex, menuIndex, menuItems[menuIndex]);
 			}
 		}
 	}
-	
+
 	@Override
-	public boolean onContextItemSelected(MenuItem item){
-		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+				.getMenuInfo();
 		int menuItemIndex = item.getItemId();
-		Book book = listBook.get( info.position );
-		
-		switch(menuItemIndex){//taken from menuItems in onCreateContextMenu()
+		Book book = listBook.get(info.position);
+
+		switch (menuItemIndex) {// taken from menuItems in onCreateContextMenu()
 		case 0:
 			showFormDialog(book);
 			break;
@@ -94,39 +93,45 @@ public class ListDataActivity extends Activity {
 			refreshListAdapter();
 			break;
 		}
-		
+
 		return true;
 	}
 
 	protected void showFormDialog() {
-		
-		txtISBN.setEnabled( true );
-		txtISBN.setText( "" );
-		txtJudul.setText( "" );
-		txtNama.setText( "" );
-		
-		formDialog.show();
-	}	
-	protected void showFormDialog(Book book) {
-		
-		Log.i("Log", book.toString());
-		txtISBN.setEnabled( false );
-		txtISBN.setText(book.getISBN());
-		txtJudul.setText(book.getJudul());
-		txtNama.setText(book.getNamaPenulis());
-		
+
+		txtISBN.setEnabled(true);
+		txtISBN.setText("");
+		txtJudul.setText("");
+		txtNama.setText("");
+
 		formDialog.show();
 	}
 
+	protected void showFormDialog(Book book) {
+
+		Log.i("Log", book.toString());
+		txtISBN.setEnabled(false);
+		txtISBN.setText(book.getISBN());
+		txtJudul.setText(book.getJudul());
+		txtNama.setText(book.getNamaPenulis());
+
+		formDialog.show();
+	}
+
+	/**
+	 * We prepare dialog in it's own method so that we can maintain code separation well.
+	 * I believe there is another <em>better</em> solution. But, it work for now.
+	 */
 	private void prepareDiaog() {
 		formDialog = new Dialog(ListDataActivity.this);
 		formDialog.setContentView(R.layout.form);
 		formDialog.setTitle("Form Buku");
-		
-		//set dialog width to fill_parent
+
+		// set dialog width to fill_parent
 		LayoutParams formDialogParams = formDialog.getWindow().getAttributes();
 		formDialogParams.width = LayoutParams.FILL_PARENT;
-		formDialog.getWindow().setAttributes((android.view.WindowManager.LayoutParams)formDialogParams);
+		formDialog.getWindow().setAttributes(
+				(android.view.WindowManager.LayoutParams) formDialogParams);
 
 		txtNama = (EditText) formDialog.findViewById(R.id.txtFormNamaPenulis);
 		txtJudul = (EditText) formDialog.findViewById(R.id.txtFormJudulBuku);
@@ -161,12 +166,15 @@ public class ListDataActivity extends Activity {
 
 			@Override
 			public void onClick(View view) {
-				
+
 				formDialog.hide();
 			}
 		});
 	}
 
+	/**
+	 * We need to refresh adapter for every data update. Without it, ListView will never be refreshed. 
+	 */
 	protected void refreshListAdapter() {
 		listBook = bookDB.toArray();
 		adapter.updateListBook(listBook);

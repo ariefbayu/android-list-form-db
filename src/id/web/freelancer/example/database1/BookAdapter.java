@@ -10,16 +10,16 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class BookAdapter extends BaseAdapter{
+public class BookAdapter extends BaseAdapter {
 	private ArrayList<Book> listBook = null;
-    private static LayoutInflater inflater=null;
+	private static LayoutInflater inflater = null;
 
-	
-	public BookAdapter(Activity activity){
-		inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+	public BookAdapter(Activity activity) {
+		inflater = (LayoutInflater) activity
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
-	
-	public void updateListBook(ArrayList<Book> newListBook){
+
+	public void updateListBook(ArrayList<Book> newListBook) {
 		this.listBook = newListBook;
 	}
 
@@ -42,16 +42,17 @@ public class BookAdapter extends BaseAdapter{
 	@Override
 	public View getView(int position, View view, ViewGroup viewGroup) {
 		View vi = view;
-		if(vi == null){
+		if (vi == null) {
 			vi = inflater.inflate(R.layout.list, null);
 		}
-		
+
 		Book book = this.listBook.get(position);
-		
-		TextView txtListJudul = (TextView)vi.findViewById(R.id.txtListJudulBuku);
-		
+
+		TextView txtListJudul = (TextView) vi
+				.findViewById(R.id.txtListJudulBuku);
+
 		txtListJudul.setText(book.getJudul());
-		
+
 		return vi;
 	}
 

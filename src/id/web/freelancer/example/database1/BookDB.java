@@ -6,6 +6,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+/**
+ * Book database object handler. This class will handle all insert, update, and
+ * delete Book. Will also help fetch all Books
+ * 
+ * @author Arief Bayu Purwanto
+ * 
+ */
 public class BookDB {
 	private Context context = null;
 	private SQLiteDatabase database = null;
@@ -115,7 +122,8 @@ public class BookDB {
 
 		try {
 
-			cursor = database.rawQuery("SELECT * FROM " + BOOK_NAME + " WHERE isbn = '" + isbn + "'", null);
+			cursor = database.rawQuery("SELECT * FROM " + BOOK_NAME
+					+ " WHERE isbn = '" + isbn + "'", null);
 			if (cursor.getCount() > 0) {
 				int indexISBN = cursor.getColumnIndex("isbn");
 				int indexJudul = cursor.getColumnIndex("judul");
