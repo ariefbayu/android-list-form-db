@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
@@ -19,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 public class ListDataActivity extends Activity {
+	private EditText txtSearchText = null;
 	private EditText txtNama = null;
 	private EditText txtJudul = null;
 	private EditText txtISBN = null;
@@ -50,6 +53,26 @@ public class ListDataActivity extends Activity {
 		
 		//registerForContextMenu() will register supplied view for onCreateContextMenu() 
 		registerForContextMenu(lsvBookView);
+		
+		txtSearchText = (EditText) findViewById(R.id.searchText);
+		txtSearchText.addTextChangedListener( new TextWatcher() {
+			
+			@Override
+			public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+				//we don't need this
+			}
+			
+			@Override
+			public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+					int arg3) {
+				//we don't need this
+			}
+			
+			@Override
+			public void afterTextChanged(Editable text) {
+				refreshListAdapter( text.toString() );
+			}
+		});
 
 		buttonCreate = (Button) findViewById(R.id.buttonCreate);
 		buttonCreate.setOnClickListener(new OnClickListener() {
@@ -177,6 +200,16 @@ public class ListDataActivity extends Activity {
 	 */
 	protected void refreshListAdapter() {
 		listBook = bookDB.toArray();
+		adapter.updateListBook(listBook);
+		lsvBookView.setAdapter(adapter);
+	}
+
+	/**
+	 * We need to refresh adapter for every data update. Without it, ListView will never be refreshed.
+	 * Overload refreshListAdapter() with filterText as String parameter. 
+	 */
+	protected void refreshListAdapter(String filterText) {
+		listBook = bookDB.toArray( filterText );
 		adapter.updateListBook(listBook);
 		lsvBookView.setAdapter(adapter);
 	}

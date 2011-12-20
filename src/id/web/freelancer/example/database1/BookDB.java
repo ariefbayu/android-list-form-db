@@ -27,15 +27,25 @@ public class BookDB {
 				+ "nama_penulis TEXT" + ");";
 		DBUtil.createTable(database, BOOK_NAME, sqlCreate);
 	}
-
+	
 	public ArrayList<Book> toArray() {
+		
+		return this.toArray("");
+	}
+
+	public ArrayList<Book> toArray(String filterText) {
 		Cursor cursor = null;
 		ArrayList<Book> allBook = null;
+		
+		String filterQuery = "";
+		if( !filterText.equalsIgnoreCase("") ) {
+			filterQuery = " WHERE judul LIKE '%" + filterText + "%'";
+		}
 
 		try {
 			allBook = new ArrayList<Book>();
 
-			cursor = database.rawQuery("SELECT * FROM " + BOOK_NAME, null);
+			cursor = database.rawQuery("SELECT * FROM " + BOOK_NAME + filterQuery, null);
 			if (cursor.getCount() > 0) {
 				int indexISBN = cursor.getColumnIndex("isbn");
 				int indexJudul = cursor.getColumnIndex("judul");

@@ -16,12 +16,14 @@ public final class R {
     public static final class id {
         public static final int btnFormBatal=0x7f050003;
         public static final int btnFormSimpan=0x7f050004;
-        public static final int buttonCreate=0x7f050006;
-        public static final int lsvListBook=0x7f050007;
+        public static final int buttonCreate=0x7f050008;
+        public static final int lsvListBook=0x7f050009;
+        public static final int searchText=0x7f050007;
         public static final int txtFormISBN=0x7f050000;
         public static final int txtFormJudulBuku=0x7f050001;
         public static final int txtFormNamaPenulis=0x7f050002;
-        public static final int txtListJudulBuku=0x7f050005;
+        public static final int txtListISBN=0x7f050005;
+        public static final int txtListJudulBuku=0x7f050006;
     }
     public static final class layout {
         public static final int form=0x7f030000;

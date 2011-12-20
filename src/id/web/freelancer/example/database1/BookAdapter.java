@@ -48,10 +48,11 @@ public class BookAdapter extends BaseAdapter {
 
 		Book book = this.listBook.get(position);
 
-		TextView txtListJudul = (TextView) vi
-				.findViewById(R.id.txtListJudulBuku);
+		TextView txtISBN = (TextView) vi.findViewById(R.id.txtListISBN);
+		TextView txtListJudul = (TextView) vi.findViewById(R.id.txtListJudulBuku);
 
 		txtListJudul.setText(book.getJudul());
+		txtISBN.setText(book.getISBN());
 
 		return vi;
 	}

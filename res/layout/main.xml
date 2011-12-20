@@ -1,25 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
-	
-    <Button
-        android:id="@+id/buttonCreate"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:text="@string/btnListTambah" />
-    
-    <ListView
-        android:id="@+id/lsvListBook"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@id/buttonCreate"
-        android:layout_alignParentTop="true"
-	/>
-</RelativeLayout >
+<LinearLayout 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+>
+    <EditText
+     android:id="@+id/searchText"
+     android:layout_width="fill_parent"
+     android:layout_height="wrap_content"
+	 android:hint="search..."
+    />
+    <RelativeLayout
+     android:layout_width="fill_parent"
+     android:layout_height="fill_parent"
+     android:orientation="vertical">
+        <Button
+         android:id="@+id/buttonCreate"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:layout_alignParentBottom="true"
+         android:text="@string/btnListTambah"/>
+        
+        <ListView
+         android:id="@+id/lsvListBook"
+         android:layout_width="fill_parent"
+         android:layout_height="fill_parent"
+         android:layout_above="@id/buttonCreate"
+         android:layout_alignParentTop="true"
+        />
+    </RelativeLayout>
+</LinearLayout>
 
 
-    
-    
+
