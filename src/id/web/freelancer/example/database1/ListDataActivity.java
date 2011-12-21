@@ -3,7 +3,9 @@ package id.web.freelancer.example.database1;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -35,8 +37,10 @@ public class ListDataActivity extends Activity {
 
 	private BookDB bookDB = null;
 	private ArrayList<Book> listBook = null;
+	private Book bookIWantToDelete = null;
 
 	private Dialog formDialog = null;
+	AlertDialog.Builder alertDialogConfirmDelete = null;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -82,6 +86,32 @@ public class ListDataActivity extends Activity {
 				showFormDialog();
 			}
 		});
+		
+		DialogInterface.OnClickListener dialogConfirmDeleteClickListener = new DialogInterface.OnClickListener() {
+		    @Override
+		    public void onClick(DialogInterface dialog, int which) {
+		        switch (which){
+		        case DialogInterface.BUTTON_POSITIVE:
+		        	if( bookIWantToDelete != null ) {
+						Log.i("Log", "item " + bookIWantToDelete.getJudul() + " deleted!");
+						bookDB.delete(bookIWantToDelete);
+						bookIWantToDelete = null;
+						refreshListAdapter();
+		        	}
+		            break;
+
+		        case DialogInterface.BUTTON_NEGATIVE:
+		            //No button clicked
+		            break;
+		        }
+		    }
+		};
+		
+		alertDialogConfirmDelete = new AlertDialog.Builder(this);
+		alertDialogConfirmDelete.setMessage("Are you sure?");
+		alertDialogConfirmDelete.setPositiveButton("Yes", dialogConfirmDeleteClickListener);
+		alertDialogConfirmDelete.setNegativeButton("No", dialogConfirmDeleteClickListener);
+
 
 		prepareDiaog();
 	}
@@ -111,9 +141,8 @@ public class ListDataActivity extends Activity {
 			showFormDialog(book);
 			break;
 		case 1:
-			Log.i("Log", "item " + book.getJudul() + " deleted!");
-			bookDB.delete(book);
-			refreshListAdapter();
+			bookIWantToDelete = book;
+			alertDialogConfirmDelete.show();
 			break;
 		}
 
@@ -189,7 +218,6 @@ public class ListDataActivity extends Activity {
 
 			@Override
 			public void onClick(View view) {
-
 				formDialog.hide();
 			}
 		});
