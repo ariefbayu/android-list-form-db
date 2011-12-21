@@ -4,3 +4,5 @@ This project, contain various code that will help you learn how to:
  * create custom ListView
  * refresh ListView when database is altered
  * create custom Dialog window
+ * implement AlertDialog: to ask for confirmation before deleting item
+ * implement Toast to show message when item is deleted
