@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class ListDataActivity extends Activity {
 	private EditText txtSearchText = null;
@@ -94,6 +95,7 @@ public class ListDataActivity extends Activity {
 		        case DialogInterface.BUTTON_POSITIVE:
 		        	if( bookIWantToDelete != null ) {
 						Log.i("Log", "item " + bookIWantToDelete.getJudul() + " deleted!");
+						showToast( "item " + bookIWantToDelete.getJudul() + " deleted!" );
 						bookDB.delete(bookIWantToDelete);
 						bookIWantToDelete = null;
 						refreshListAdapter();
@@ -108,7 +110,6 @@ public class ListDataActivity extends Activity {
 		};
 		
 		alertDialogConfirmDelete = new AlertDialog.Builder(this);
-		alertDialogConfirmDelete.setMessage("Are you sure?");
 		alertDialogConfirmDelete.setPositiveButton("Yes", dialogConfirmDeleteClickListener);
 		alertDialogConfirmDelete.setNegativeButton("No", dialogConfirmDeleteClickListener);
 
@@ -142,6 +143,7 @@ public class ListDataActivity extends Activity {
 			break;
 		case 1:
 			bookIWantToDelete = book;
+			alertDialogConfirmDelete.setMessage("delete " + book.getJudul() + "?");
 			alertDialogConfirmDelete.show();
 			break;
 		}
@@ -149,6 +151,9 @@ public class ListDataActivity extends Activity {
 		return true;
 	}
 
+	/**
+	 * Show form dialog for inserting book
+	 */
 	protected void showFormDialog() {
 
 		txtISBN.setEnabled(true);
@@ -159,6 +164,10 @@ public class ListDataActivity extends Activity {
 		formDialog.show();
 	}
 
+	/**
+	 * Show form dialog for editing book
+	 * @param book book to be displayed
+	 */
 	protected void showFormDialog(Book book) {
 
 		Log.i("Log", book.toString());
@@ -240,5 +249,13 @@ public class ListDataActivity extends Activity {
 		listBook = bookDB.toArray( filterText );
 		adapter.updateListBook(listBook);
 		lsvBookView.setAdapter(adapter);
+	}
+	
+	/**
+	 * wrapper method to encapsulate getApplicationContext() that is needed for displaying Toast message.
+	 * Toast duration is set to SHORT.
+	 */
+	protected void showToast(String text) {
+		Toast.makeText(getApplication(), text, Toast.LENGTH_SHORT).show();
 	}
 }
